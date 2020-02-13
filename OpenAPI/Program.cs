@@ -27,7 +27,7 @@ namespace OpenAPI
 
         static void Main(string[] args)
         {
-
+            // je nutné se přihlásit k odběru API na https://rapidapi.com/dimas/api/NasaAPI/endpoints
             var client = new RestClient("https://nasaapidimasv1.p.rapidapi.com/getAsteroids");
             var request = new RestRequest(Method.POST);
             request.AddHeader("x-rapidapi-host", "NasaAPIdimasV1.p.rapidapi.com");
