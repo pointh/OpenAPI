@@ -20,8 +20,9 @@ namespace OpenAPI
 
             public override string ToString()
             {
-                return $"Id: {Id} \t Jméno: {Name} \t Nebezpečný: {Is_potentially_hazardous_asteroid}" + 
-                    $"\nOdkaz: {Nasa_jpl_url} \n";
+                return $"Id: {Id} \t Jméno: {Name.Substring(0, (Name.Length>20 ? 20 : Name.Length)),-20} " + 
+                    $"\t Nebezpečný: {Is_potentially_hazardous_asteroid, -20}" + 
+                    $" Odkaz: {Nasa_jpl_url} \n";
             }
         }
 
