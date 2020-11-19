@@ -1,4 +1,4 @@
-﻿using RestSharp;
+﻿using System.Net.Http;
 using System;
 using Newtonsoft;
 using Newtonsoft.Json.Linq;
@@ -28,25 +28,19 @@ namespace OpenAPI
 
         static void Main(string[] args)
         {
-            // je nutné se přihlásit k odběru API na https://rapidapi.com/dimas/api/NasaAPI/endpoints
-            var client = new RestClient("https://nasaapidimasv1.p.rapidapi.com/getAsteroids");
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("x-rapidapi-host", "NasaAPIdimasV1.p.rapidapi.com");
-            request.AddHeader("x-rapidapi-key", "e386c6d8fcmshe260585231da736p1b775djsn22735edacde9");
-            request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            IRestResponse response = client.Execute(request);
+            // je nutné se přihlásit k odběru API na https://api.nasa.gov/
+            var client = new HttpClient();
+            var response = client.GetAsync("https://api.nasa.gov/neo/rest/v1/feed?" +
+                "start_date=2020-11-18&end_date=2020-11-19" +
+                "&api_key=QK36Tn9laJtbIDk2hO2PFuU9JiAxnubncCq7nF6f").Result.Content.ReadAsStringAsync().Result;
 
             // celý obsah parsovaný jako json objekty
-            JObject asteroids = JObject.Parse(response.Content);
+            JObject asteroids = JObject.Parse(response);
 
-            //{
-            //  "callback": "success",
-            //  "contextWrites": {
-            //      "to": { ....
-            JArray asteroidsData = (JArray)asteroids["contextWrites"]["to"]["near_earth_objects"];
-            // asteroids["contextWrites"]["to"]["near_earth_objects"] je pole
+            
+            JArray asteroidsData = (JArray)asteroids["near_earth_objects"]["2020-11-19"];
 
-            List<DangerousObject> dangerousList = new List<DangerousObject>();
+            List <DangerousObject> dangerousList = new List<DangerousObject>();
 
             for (int i = 0; i<asteroidsData.Count; i++)
             {
