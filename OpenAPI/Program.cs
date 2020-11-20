@@ -37,6 +37,9 @@ namespace OpenAPI
             // celý obsah parsovaný jako json objekty
             JObject asteroids = JObject.Parse(response);
 
+            Console.WriteLine(asteroids);
+
+            Console.ReadLine();
             
             JArray asteroidsData = (JArray)asteroids["near_earth_objects"]["2020-11-19"];
 
