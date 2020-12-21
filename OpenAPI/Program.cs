@@ -26,7 +26,7 @@ namespace OpenAPI
             }
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
             // je nutné se přihlásit k odběru API na https://api.nasa.gov/
             var client = new HttpClient();
